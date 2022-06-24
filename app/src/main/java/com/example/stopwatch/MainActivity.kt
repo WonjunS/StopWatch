@@ -53,7 +53,10 @@ class MainActivity : AppCompatActivity() {
             val milli = time % 100
             runOnUiThread { // UI 갱신
                 binding.secTextView.text = "$sec"
-                binding.milliTextView.text = "$milli"
+                if(milli < 10)
+                    binding.milliTextView.text = "0$milli"
+                else
+                    binding.milliTextView.text = "$milli"
             }
         }
     }
@@ -61,7 +64,10 @@ class MainActivity : AppCompatActivity() {
     private fun recordLapTime() {
         val lapTime = this.time // 현재 시간을 지역 변수에 저장
         val textView = TextView(this) // 동적으로 TextView를 생성
-        textView.text = "$lap LAP : ${lapTime / 100}.${lapTime % 100}"
+        if(time % 100 < 10)
+            textView.text = "$lap LAP : ${lapTime / 100}.0${lapTime % 100}"
+        else
+            textView.text = "$lap LAP : ${lapTime / 100}.${lapTime % 100}"
 
         // 맨 위에 랩타임 추가
         binding.lapLayout.addView(textView, 0)
